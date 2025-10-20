@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private  int _hitPoints = 100;
+    [SerializeField] private int _hitPoints = 100;
+
     private int _maxHitPoints = 100;
 
     public void TakeDamage(int damage)

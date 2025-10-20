@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    private int _damage = 10;
-    private float _attackCooldown = 2f;
+    [SerializeField] private int _damage = 10;
+    [SerializeField] private float _attackCooldown = 2f;
+
     private bool _canAttack = true;
 
     public void DealDamage(GameObject target)
