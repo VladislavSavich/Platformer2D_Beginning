@@ -1,19 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyCombat : MonoBehaviour
+public class PlayerAttacker : MonoBehaviour
 {
     private int _damage = 10;
     private float _attackCooldown = 2f;
     private bool _canAttack = true;
 
-    public void DealDamage(Player player) 
+    public void DealDamage(Enemy enemy)
     {
-        PlayerCombat playerCombat = player.GetComponent<PlayerCombat>();
+        Health enemyHealth = enemy.GetComponent<Health>();
 
-        if (playerCombat != null && _canAttack) 
+        if (enemyHealth != null && _canAttack)
         {
-            playerCombat.TakeDamage(_damage);
+            enemyHealth.TakeDamage(_damage);
             StartCoroutine(AttackCooldown());
         }
     }
@@ -24,5 +24,4 @@ public class EnemyCombat : MonoBehaviour
         yield return new WaitForSeconds(_attackCooldown);
         _canAttack = true;
     }
-
 }

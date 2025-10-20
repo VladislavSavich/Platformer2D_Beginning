@@ -4,12 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerAnimator : MonoBehaviour
 {
+    public readonly int Speed = Animator.StringToHash(nameof(Speed));
+    public readonly int Attack = Animator.StringToHash(nameof(Attack));
+
     private Animator _animator;
     private Rigidbody2D _rigidbody;
     private float _currentSpeed;
-
-    public readonly int Speed = Animator.StringToHash(nameof(Speed));
-    public readonly int Attack = Animator.StringToHash(nameof(Attack));
 
     private void Awake()
     {

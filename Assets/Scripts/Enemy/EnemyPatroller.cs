@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class EnemyMover : MonoBehaviour
+public class EnemyPatroller : MonoBehaviour
 {
     [SerializeField] private Vector2[] _patrolPoints;
     [SerializeField] private float _speed;
@@ -30,16 +30,10 @@ public class EnemyMover : MonoBehaviour
         DirectionX = Mathf.Sign(_currentPoint.x - transform.localPosition.x);
         _rigidbody.velocity = new Vector2(DirectionX * _speed, _rigidbody.velocity.y);
 
-        if (Mathf.Abs(transform.localPosition.x - _currentPoint.x) < 0.1f) 
+        if (Mathf.Abs(transform.localPosition.x - _currentPoint.x) < 0.1f)
         {
             _pointIndex = (_pointIndex == 1) ? 0 : 1;
             _currentPoint = _patrolPoints[_pointIndex];
         }
-    }
-
-    public void MoveToTarget(float targetPositionX) 
-    { 
-        DirectionX = Mathf.Sign(targetPositionX - transform.localPosition.x);
-        _rigidbody.velocity = new Vector2(DirectionX * _speed, _rigidbody.velocity.y);
     }
 }

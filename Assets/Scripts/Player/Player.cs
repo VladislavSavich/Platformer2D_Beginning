@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,18 +9,19 @@ public class Player : MonoBehaviour
     [SerializeField] private GroundDetector _groundDetector;
     [SerializeField] private Collector _collector;
     [SerializeField] private EnemyDetector _enemyDetector;
-    [SerializeField] private PlayerCombat _playerCombat;
+    [SerializeField] private Health _playerHealth;
+    [SerializeField] private PlayerAttacker _playerAttacker;
 
     public Vector2 Position => transform.position;
 
     private void OnEnable()
     {
-        _collector.HealTaken += _playerCombat.TakeHeal;
+        _collector.HealTaken += _playerHealth.TakeHeal;
     }
 
     private void OnDisable()
     {
-        _collector.HealTaken -= _playerCombat.TakeHeal;
+        _collector.HealTaken -= _playerHealth.TakeHeal;
     }
 
     private void FixedUpdate()
@@ -35,8 +35,11 @@ public class Player : MonoBehaviour
         if (_inputReader.GetIsJump() && _groundDetector.IsGrounded)
             _playerMover.Jump();
 
-        if (_inputReader.GetIsAttack() && _enemyDetector.IsEnemy)
+        if (_inputReader.GetIsAttack() && _enemyDetector.IsEnemy) 
+        {
             _playerAnimator.SetupAttack();
+            _playerAttacker.DealDamage(_enemyDetector.DetectedEnemy);
+        }
     }
 
     private void Update()
