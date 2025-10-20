@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private EnemyChaser _enemyChaser;
-    [SerializeField] private EnemyPatroller _enemyPatroller;
+    [SerializeField] private Chaser _enemyChaser;
+    [SerializeField] private Patroller _enemyPatroller;
     [SerializeField] private Rotator _rotator;
     [SerializeField] private PlayerDetector _playerDetector;
     [SerializeField] private EnemyAnimator _enemyAnimator;
-    [SerializeField] private EnemyAttacker _enemyAttacker;
+    [SerializeField] private Attacker _enemyAttacker;
     [SerializeField] private Health _enemyHealth;
 
     private void FixedUpdate()
@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
             if (_playerDetector.IsPlayer) 
             {
                 _enemyAnimator.SetupAttack();
-                _enemyAttacker.DealDamage(_playerDetector.DetectedPlayer);      
+                _enemyAttacker.DealDamage(_playerDetector.DetectedPlayer.gameObject);      
             }
 
             _rotator.Rotate(_enemyChaser.DirectionX);

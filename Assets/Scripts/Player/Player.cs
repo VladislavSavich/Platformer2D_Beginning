@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Collector _collector;
     [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private Health _playerHealth;
-    [SerializeField] private PlayerAttacker _playerAttacker;
+    [SerializeField] private Attacker _playerAttacker;
 
     public Vector2 Position => transform.position;
 
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         if (_inputReader.GetIsAttack() && _enemyDetector.IsEnemy) 
         {
             _playerAnimator.SetupAttack();
-            _playerAttacker.DealDamage(_enemyDetector.DetectedEnemy);
+            _playerAttacker.DealDamage(_enemyDetector.DetectedEnemy.gameObject);
         }
     }
 

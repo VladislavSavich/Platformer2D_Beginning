@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class EnemyPatroller : MonoBehaviour
+public class Patroller : MonoBehaviour
 {
     [SerializeField] private Vector2[] _patrolPoints;
     [SerializeField] private float _speed;

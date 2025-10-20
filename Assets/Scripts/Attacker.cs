@@ -1,19 +1,22 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerAttacker : MonoBehaviour
+public class Attacker : MonoBehaviour
 {
     private int _damage = 10;
     private float _attackCooldown = 2f;
     private bool _canAttack = true;
 
-    public void DealDamage(Enemy enemy)
+    public void DealDamage(GameObject target)
     {
-        Health enemyHealth = enemy.GetComponent<Health>();
+        Health targetHealth = null;
+        
+        if (target.TryGetComponent<Health>(out Health health))
+            targetHealth = health;
 
-        if (enemyHealth != null && _canAttack)
+        if (targetHealth != null && _canAttack)
         {
-            enemyHealth.TakeDamage(_damage);
+            targetHealth.TakeDamage(_damage);
             StartCoroutine(AttackCooldown());
         }
     }

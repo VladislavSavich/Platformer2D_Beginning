@@ -1,8 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CapsuleCollider2D))]
-public class EnemyChaser : MonoBehaviour
+public class Chaser : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
