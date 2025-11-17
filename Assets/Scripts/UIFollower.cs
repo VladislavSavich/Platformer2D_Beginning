@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UIFollower : MonoBehaviour
 {
     [SerializeField] private GameObject _gameObject;
-    [SerializeField] private Slider _smoothSlider;
+    [SerializeField] private Image _smoothSlider;
     [SerializeField] private int _height;
     [SerializeField] private int _width;
 

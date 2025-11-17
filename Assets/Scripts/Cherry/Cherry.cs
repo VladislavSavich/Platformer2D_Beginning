@@ -4,9 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Cherry : MonoBehaviour
 {
-    public int CherryHeal { get; private set; }
     public Vector2 Position => transform.position;
-    public bool IsActive;
+    public int CherryHeal { get; private set; }
+    public bool IsActive { get; private set; }
 
     private void Awake()
     {
