@@ -8,6 +8,8 @@ public class Attacker : MonoBehaviour
 
     private bool _canAttack = true;
 
+    public int Damage => _damage;
+
     public void DealDamage(GameObject target)
     {
         Health targetHealth = null;

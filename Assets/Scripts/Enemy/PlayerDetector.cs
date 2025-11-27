@@ -1,17 +1,17 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
 public class PlayerDetector : MonoBehaviour
 {
+    [SerializeField] private float _searchRadius = 6f;
+    
     public Player DetectedPlayer { get; private set; }
     public bool IsPlayer { get; private set; }
     public bool IsPlayerNearby { get; private set; }
     public Vector2 TargetPosition => DetectedPlayer.Position;
 
-    private void Awake()
+    private void Update()
     {
-        GetComponent<CircleCollider2D>().isTrigger = true;
+        FindPlayer();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -30,20 +30,33 @@ public class PlayerDetector : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void FindPlayer() 
     {
-        if (collision.gameObject.TryGetComponent<Player>(out Player player))
+        Collider2D[] playersInRadius = Physics2D.OverlapCircleAll(transform.position, _searchRadius);
+        bool playerFound = false;
+
+        foreach (Collider2D playerCollider in playersInRadius)
         {
-            IsPlayerNearby = true;
-            SetTarget(player);
+            if (playerCollider.TryGetComponent<Player>(out Player player))
+            {
+                playerFound = true;
+                IsPlayerNearby = true;
+                SetTarget(player);
+                break;
+            }
+        }
+
+        if (!playerFound && IsPlayerNearby)
+        {
+            IsPlayerNearby = false;
+            UpdateTargetState();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void UpdateTargetState()
     {
-        if (collision.gameObject.TryGetComponent<Player>(out _))
+        if (!IsPlayer && !IsPlayerNearby)
         {
-            IsPlayerNearby = false;
             ClearTarget();
         }
     }

@@ -4,6 +4,8 @@ public class EnemyDetector : MonoBehaviour
 {
     public Enemy DetectedEnemy { get; private set; }
     public bool IsEnemy { get; private set; }
+    public bool IsEnemyInRadius { get; private set; }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
