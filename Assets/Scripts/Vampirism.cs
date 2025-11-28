@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Vampirism : MonoBehaviour
 {
+    [SerializeField] private NearestEnemySearcher _enemySearcher;
     [SerializeField] private Attacker _attacker;
     [SerializeField] private Health _hitPoints;
     [SerializeField] private float _skillDuration = 6;
     [SerializeField] private float _skillCooldown = 4;
-    [SerializeField] private float _skillRadius = 5;
 
-    private WaitForSeconds _vampirismWait = new WaitForSeconds(1f);
+    private WaitForSeconds _vampirismWait;
+    private float _timerStep = 1f;
     private int _damageDivider = 2;
     private float _timer;
     private bool _canSteal = true;
@@ -19,10 +20,9 @@ public class Vampirism : MonoBehaviour
 
     public bool IsVampirismActive { get; private set; }
 
-    public void StealHealth()
+    private void Start()
     {
-        if (_canSteal)
-            StartCoroutine(PerformVampirism());
+        _vampirismWait = new WaitForSeconds(_timerStep);
     }
 
     private IEnumerator PerformVampirism()
@@ -33,7 +33,7 @@ public class Vampirism : MonoBehaviour
 
         while (_timer >= 0)
         {
-            Enemy nearestEnemy = FindNearestEnemy();
+            Enemy nearestEnemy = _enemySearcher.FindNearestEnemy();
 
             if (nearestEnemy != null)
             {
@@ -43,35 +43,12 @@ public class Vampirism : MonoBehaviour
 
             yield return _vampirismWait;
 
-            _timer -= 1f;
+            _timer -= _timerStep;
             Changed?.Invoke(_timer, _skillDuration);
         }
 
         IsVampirismActive = false;
         StartCoroutine(StartSkillCooldown());
-    }
-
-    private Enemy FindNearestEnemy() 
-    {
-        Collider2D[] allEnemiesInRadius = Physics2D.OverlapCircleAll(transform.position, _skillRadius);
-        Enemy nearestEnemy = null;
-        float nearestSqrDistance = float.MaxValue;
-
-        foreach (Collider2D enemyInRadius in allEnemiesInRadius) 
-        {
-            if (enemyInRadius.TryGetComponent<Enemy>(out Enemy enemy)) 
-            {
-                float sqrDistance = (enemy.transform.position - transform.position).sqrMagnitude;
-
-                if (sqrDistance < nearestSqrDistance) 
-                {
-                    nearestSqrDistance = sqrDistance;
-                    nearestEnemy = enemy;              
-                }
-            }       
-        }
-
-        return nearestEnemy;   
     }
 
     private IEnumerator StartSkillCooldown()
@@ -82,10 +59,16 @@ public class Vampirism : MonoBehaviour
         {
             yield return _vampirismWait;
 
-            _timer += 1f;
+            _timer += _timerStep;
             Changed?.Invoke(_timer, _skillCooldown);
         }
 
         _canSteal = true;
+    }
+
+    public void StealHealth()
+    {
+        if (_canSteal)
+            StartCoroutine(PerformVampirism());
     }
 }
