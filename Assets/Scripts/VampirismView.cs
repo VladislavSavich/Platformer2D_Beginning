@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthStealerView : MonoBehaviour
+public class VampirismView : MonoBehaviour
 {
-    [SerializeField] private HealthStealer _healthStealer;
+    [SerializeField] private Vampirism _healthStealer;
     [SerializeField] private Image _smoothSlider;
     [SerializeField] private Image _spriteRadius;
 
@@ -42,7 +41,7 @@ public class HealthStealerView : MonoBehaviour
     {
         if (_spriteRadius != null)
         {
-            if (_healthStealer.VampirismAvtivated)
+            if (_healthStealer.IsVampirismActive)
                 _spriteRadius.enabled = true;
             else
                 _spriteRadius.enabled = false;

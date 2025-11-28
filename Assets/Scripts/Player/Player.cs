@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private Health _playerHealth;
     [SerializeField] private Attacker _playerAttacker;
-    [SerializeField] private HealthStealer _healthStealer;
+    [SerializeField] private Vampirism _vampirism;
 
     public Vector2 Position => transform.position;
 
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
 
         if (_inputReader.GetIsSkill()) 
         {
-            _healthStealer.StealHealth();
+            _vampirism.StealHealth();
         }
     }
 
